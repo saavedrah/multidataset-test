@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- ORACLE -->
+    <!--    <bean id="application" primary="true" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">-->
+    <!--        <property name="driverClassName" value="com.arjuna.ats.jdbc.TransactionalDriver" />-->
+    <!--        <property name="url" value="jdbc:oracle:thin:@10.61.54.200:1521:xe" />-->
+    <!--        <property name="username" value="sctestoracle" />-->
+    <!--        <property name="password" value="sctestoraclepw" />-->
+    <!--        <property name="initialSize" value="3" />-->
+    <!--        <property name="maxActive" value="10" />-->
+    <!--    </bean>-->
+
+    <!-- POSTGRESQL -->
+
+    <bean id="ds1" primary="true" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.arjuna.ats.jdbc.TransactionalDriver" />
+        <property name="url" value="jdbc:postgresql://localhost:5432/scuserapp" />
+        <property name="username" value="scuserapp" />
+        <property name="password" value="scuserapppw" />
+        <property name="initialSize" value="3" />
+        <property name="maxActive" value="10" />
+    </bean>
+
+    <!--    <bean id="testdb" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">-->
+    <!--        <property name="driverClassName" value="com.arjuna.ats.jdbc.TransactionalDriver" />-->
+    <!--        <property name="url" value="jdbc:postgresql://localhost:5432/testdb" />-->
+    <!--        <property name="username" value="testdbrole" />-->
+    <!--        <property name="password" value="testdbrolepw" />-->
+    <!--    </bean>-->
+
+    <!--    <bean id="local_lib_ds2" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">-->
+    <!--        <property name="driverClassName" value="com.arjuna.ats.jdbc.TransactionalDriver" />-->
+    <!--        <property name="url" value="jdbc:postgresql://localhost:5432/local_lib_ds2" />-->
+    <!--        <property name="username" value="test" />-->
+    <!--        <property name="password" value="testpw" />-->
+    <!--    </bean>-->
+
+    <bean class="com.arjuna.ats.jta.TransactionManager" factory-method="transactionManager" id="arjunaTransactionManager">
+        <property name="transactionTimeout" value="80"/>
+    </bean>
+
+    <bean class="com.arjuna.ats.jta.UserTransaction" factory-method="userTransaction" id="arjunaUserTransaction" />
+
+    <bean class="org.springframework.transaction.jta.JtaTransactionManager" id="transactionManager">
+        <property name="transactionManager">
+            <ref bean="arjunaTransactionManager" />
+        </property>
+        <property name="userTransaction">
+            <ref bean="arjunaUserTransaction" />
+        </property>
+    </bean>
+</beans>

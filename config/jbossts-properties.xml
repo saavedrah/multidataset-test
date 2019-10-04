@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <!-- (default is YES) -->
+    <!-- (twoPhaseCommit is NO) -->
+    <entry key="CoordinatorEnvironmentBean.commitOnePhase">NO</entry>
+
+    <!-- (Must be unique across all Arjuna instances.) -->
+    <!-- (default is 1) -->
+    <entry key="CoreEnvironmentBean.nodeIdentifier">1</entry>
+
+    <!-- Default isolation level for tansactional database operations. -->
+    <!-- TRANSACTION_READ_COMMITTED=2 -->
+    <entry key="JDBCEnvironmentBean.isolationLevel">2</entry>
+
+    <entry key="isSameRM-override-value">false</entry>
+</properties>
