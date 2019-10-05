@@ -9,6 +9,7 @@ of select / insert requests are sent.
 
 # Setup
 It is required to create the session and the test table (autotestcommodity) in the database.
+Change the data source name in MultiDataSourceTestApplication, now it is using ds0
 
 # Problem
 The application stops after the fifth loop of transactions in PostgreSql and Oracle.
@@ -27,3 +28,6 @@ java.sql.DriverManager.getConnection(DriverManager.java:664)
 java.sql.DriverManager.getConnection(DriverManager.java:208)
 com.mono.multidatasourcetest.db.PrepareStatementExec.executeUpdate(PrepareStatementExec.java:51)
 </pre>
+
+# Run
+Run the test case in MultiDataSourceTestApplicationTest 
