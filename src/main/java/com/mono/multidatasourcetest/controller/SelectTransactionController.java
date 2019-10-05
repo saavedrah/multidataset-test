@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mono.multidatasourcetest.MultiDataSourceTestApplication;
 import com.mono.multidatasourcetest.context.SessionInfo;
 import com.mono.multidatasourcetest.services.LogicService;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException;
@@ -41,7 +42,7 @@ public class SelectTransactionController {
             HttpServletResponse response) throws Exception {
         LOGGER.info("START selectTransaction");
 
-        Collection<Map> result = logicService.selectTransaction("ds0");
+        Collection<Map> result = logicService.selectTransaction(MultiDataSourceTestApplication.DATASOURCENAME);
 
         String resultStr;
         ObjectMapper mapper = createObjectMapper(false);

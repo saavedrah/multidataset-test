@@ -1,5 +1,6 @@
 package com.mono.multidatasourcetest.controller;
 
+import com.mono.multidatasourcetest.MultiDataSourceTestApplication;
 import com.mono.multidatasourcetest.context.SessionInfo;
 import com.mono.multidatasourcetest.services.LogicService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class ThreadController {
         HttpSession session = request.getSession();
         this.sessionInfo.setSessionId(session.getId());
 
-        Collection resultAsync = logicService.execThreadTransaction("ds0");
+        Collection resultAsync = logicService.execThreadTransaction(MultiDataSourceTestApplication.DATASOURCENAME);
 
         try (OutputStream outs = response.getOutputStream()) {
             byte[] outByte = resultAsync.toString().getBytes(StandardCharsets.UTF_8);

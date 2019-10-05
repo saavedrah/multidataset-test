@@ -1,5 +1,6 @@
 package com.mono.multidatasourcetest.controller;
 
+import com.mono.multidatasourcetest.MultiDataSourceTestApplication;
 import com.mono.multidatasourcetest.context.SessionInfo;
 import com.mono.multidatasourcetest.services.LogicService;
 import org.slf4j.Logger;
@@ -32,7 +33,7 @@ public class RegisterTransactionController {
             HttpServletResponse response) throws Exception {
         LOGGER.info("START registerTransaction");
 
-        int rowCount = logicService.registerTransaction("ds0");
+        int rowCount = logicService.registerTransaction(MultiDataSourceTestApplication.DATASOURCENAME);
 
         LOGGER.info("END registerTransaction");
 

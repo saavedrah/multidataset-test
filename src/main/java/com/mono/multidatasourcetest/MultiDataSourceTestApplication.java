@@ -25,6 +25,8 @@ import java.util.Map;
 public class MultiDataSourceTestApplication {
 	private static final Logger LOGGER = LoggerFactory.getLogger(MultiDataSourceTestApplication.class);
 
+	public static String DATASOURCENAME = "ds0";
+
 	@Autowired
 	private DataSourceManager dataSourceManager;
 
