@@ -19,6 +19,7 @@ public class StatementExecutor {
     public Collection<Map> executeSelect(String dataSourceName, String sql) throws SQLException, SystemException, NotSupportedException {
 
         LOGGER.info("executeSelect - ThreadId:" + Thread.currentThread().getId());
+        LOGGER.info ("executeSelect - ISOLATION LEVEL: " + com.arjuna.ats.jdbc.common.jdbcPropertyManager.getJDBCEnvironmentBean().getIsolationLevel());
 
         TransactionManager transactionManager = com.arjuna.ats.jta.TransactionManager.transactionManager();
         PrepareStatementExec sqlExec = new PrepareStatementExec();

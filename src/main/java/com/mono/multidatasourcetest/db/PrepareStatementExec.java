@@ -24,7 +24,6 @@ public class PrepareStatementExec {
             conn = DriverManager.getConnection(dsJndiTestDb, new Properties());
 
             LOGGER.info("Connection - clientInfo: " + conn.getClientInfo());
-//            LOGGER.info("Connection - schema :" + conn.getSchema());
 
             stmt = conn.prepareStatement(sql);
 

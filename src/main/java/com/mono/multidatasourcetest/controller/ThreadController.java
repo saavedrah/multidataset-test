@@ -1,5 +1,6 @@
-package com.mono.multidatasourcetest;
+package com.mono.multidatasourcetest.controller;
 
+import com.mono.multidatasourcetest.context.SessionInfo;
 import com.mono.multidatasourcetest.services.LogicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,24 +9,29 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
-import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 
 @RestController
-public class MainRestController {
+public class ThreadController {
 
     @Autowired
     LogicService logicService;
 
-    @RequestMapping(value="/testTransaction", method= RequestMethod.GET)
+    @Autowired
+    protected SessionInfo sessionInfo;
+
+    @RequestMapping(value="/testTransaction.json", method= RequestMethod.GET)
     public void endPointGet(
             HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        Collection resultAsync = logicService.execThreadTransaction();
+        HttpSession session = request.getSession();
+        this.sessionInfo.setSessionId(session.getId());
+
+        Collection resultAsync = logicService.execThreadTransaction("ds0");
 
         try (OutputStream outs = response.getOutputStream()) {
             byte[] outByte = resultAsync.toString().getBytes(StandardCharsets.UTF_8);

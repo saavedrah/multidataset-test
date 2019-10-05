@@ -9,7 +9,7 @@
     <!-- (default is 1) -->
     <entry key="CoreEnvironmentBean.nodeIdentifier">1</entry>
 
-    <!-- Default isolation level for tansactional database operations. -->
+    <!-- Default isolation level for transactional database operations. -->
     <!-- TRANSACTION_READ_COMMITTED=2 -->
     <entry key="JDBCEnvironmentBean.isolationLevel">2</entry>
 

@@ -20,15 +20,24 @@ repositories {
 
 dependencies {
 	compile fileTree(dir: 'ext-lib', include: '*.jar')
+
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	// XA
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-jta-narayana', version: '2.0.9.RELEASE'
 	// DB Pool
 	compile group: 'commons-dbcp', name: 'commons-dbcp', version: '1.4'
+	// Spring Session
+	compile group: 'org.springframework.session', name: 'spring-session-jdbc', version: '2.1.8.RELEASE'
 	compileOnly 'org.projectlombok:lombok'
 //	implementation 'org.postgresql:postgresql'
-//	runtimeOnly 'org.postgresql:postgresql'
+	runtimeOnly 'org.postgresql:postgresql'
+
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.9'
+	compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.9.9'
+
+	testCompile fileTree(dir: 'lib', include: '*.jar')
+
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

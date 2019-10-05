@@ -1,16 +1,12 @@
 package com.mono.multidatasourcetest.services;
 
-import com.arjuna.ats.internal.arjuna.tools.log.EditableAtomicAction;
-import com.mono.multidatasourcetest.db.PrepareStatementExec;
 import com.mono.multidatasourcetest.db.StatementExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.NotSupportedException;
 import javax.transaction.SystemException;
-import javax.transaction.TransactionManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,13 +18,29 @@ import java.util.concurrent.CountDownLatch;
 public class LogicService {
     private static final Logger LOGGER = LoggerFactory.getLogger(LogicService.class);
 
-    volatile Collection<Map> returnClct = new ArrayList<>();
 
-    public Collection execThreadTransaction() throws InterruptedException {
+    private final String selectStmt = "SELECT commodity_id, commodity_name from autotestcommodity";
+
+    volatile Collection<Map> returnCollection = new ArrayList<>();
+
+    public Collection<Map> selectTransaction(String dataSourceName) throws NotSupportedException, SQLException, SystemException {
+        StatementExecutor statementExecutor = new StatementExecutor();
+        Collection<Map> ret = statementExecutor.executeSelect(dataSourceName, selectStmt);
+
+        return ret;
+    }
+
+    public int registerTransaction(String dataSourceName) throws Exception {
+        final String updateStmt = String.format("INSERT INTO autotestcommodity (commodity_id, commodity_name) values ('%s', 'commodityName')", UUID.randomUUID().toString());
+
+        StatementExecutor statementExecutor = new StatementExecutor();
+        int rowCount = statementExecutor.executeUpdate(dataSourceName, updateStmt, 10000);
+
+        return rowCount;
+    }
+    public Collection execThreadTransaction(final String dataSourceName) throws InterruptedException {
 
         final CountDownLatch latch = new CountDownLatch(3);
-        final String dataSourceName = "ds1";
-        final String selectStmt = "SELECT commodity_id, commodity_name from autotestcommodity";
         final String updateStmt = String.format("INSERT INTO autotestcommodity (commodity_id, commodity_name) values ('%s', 'commodityName')", UUID.randomUUID().toString());
 
         Thread thread1 = new Thread(new Runnable() {
@@ -76,9 +88,9 @@ public class LogicService {
                     Thread.currentThread().sleep(1000);
 
                     StatementExecutor statementExecutor = new StatementExecutor();
-                    returnClct = statementExecutor.executeSelect("ds1", selectStmt);
+                    returnCollection = statementExecutor.executeSelect("ds1", selectStmt);
 
-                    LOGGER.info("Thread 3: " + returnClct);
+                    LOGGER.info("Thread 3: " + returnCollection);
                 } catch (RuntimeException e) {
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
@@ -96,6 +108,6 @@ public class LogicService {
 
         latch.await();
 
-        return returnClct;
+        return returnCollection;
     }
 }

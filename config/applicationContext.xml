@@ -7,18 +7,17 @@
         http://www.springframework.org/schema/context/spring-context.xsd">
 
     <!-- ORACLE -->
-    <!--    <bean id="application" primary="true" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">-->
-    <!--        <property name="driverClassName" value="com.arjuna.ats.jdbc.TransactionalDriver" />-->
-    <!--        <property name="url" value="jdbc:oracle:thin:@10.61.54.200:1521:xe" />-->
-    <!--        <property name="username" value="sctestoracle" />-->
-    <!--        <property name="password" value="sctestoraclepw" />-->
-    <!--        <property name="initialSize" value="3" />-->
-    <!--        <property name="maxActive" value="10" />-->
-    <!--    </bean>-->
+    <bean id="ds0" primary="true" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.arjuna.ats.jdbc.TransactionalDriver" />
+        <property name="url" value="jdbc:oracle:thin:@localhost:1522:xe" />
+        <property name="username" value="scoracle" />
+        <property name="password" value="scoraclepw" />
+        <property name="initialSize" value="3" />
+        <property name="maxActive" value="10" />
+    </bean>
 
     <!-- POSTGRESQL -->
-
-    <bean id="ds1" primary="true" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+    <bean id="ds1" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="com.arjuna.ats.jdbc.TransactionalDriver" />
         <property name="url" value="jdbc:postgresql://localhost:5432/scuserapp" />
         <property name="username" value="scuserapp" />
